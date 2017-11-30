@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import SpotifyContainer from './Components/SpotifyContainer.js';
 
-ReactDOM.render(<App />, document.getElementById('root'));
-registerServiceWorker();
+ReactDOM.render(
+  <SpotifyContainer />,
+  document.getElementById('root')
+);
+// registerServiceWorker();
