@@ -25,7 +25,7 @@ class SpotifyLandingPage extends Component {
   render() {
     return (
       <div>
-        <Route exact path="/synthesis" component={form}/>
+        <Route exact path="/home" component={form}/>
       </div>
     )
   }
