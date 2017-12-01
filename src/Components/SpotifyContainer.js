@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { Button } from 'semantic-ui-react'
 import { Route } from 'react-router-dom';
+import SpotifyLandingPage from './SpotifyLandingPage.js'
 
 const button = () => {
   return (
-    <Button as="a" href="http://localhost:3000/api/v1/login">Log In</Button>
+    <div>
+      <Button href="http://localhost:3000/api/v1/login" basic color="teal">Log In</Button>
+    </div>
   )
 }
 
