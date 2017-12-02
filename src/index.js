@@ -2,17 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import SpotifyContainer from './Components/SpotifyContainer.js';
-
-const MyApp = ()=>(
-  <Router>
-    <SpotifyContainer />
-  </Router>
-)
+import App from './components/App.js';
 
 
 ReactDOM.render(
-  <MyApp />,
+  <App />,
   document.getElementById('root')
 );
 // registerServiceWorker();
