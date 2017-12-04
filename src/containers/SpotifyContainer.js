@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 
 import { Grid } from 'semantic-ui-react'
-// import { Button } from 'semantic-ui-react'
 
 import LoginButton from '../components/Login/LoginPage';
 import MainPage from '../components/Main/MainPage';
@@ -26,6 +25,7 @@ class SpotifyContainer extends Component {
       isSong: true,
       songResults: [],
       artistResults: [],
+      currentArtistId: "",
       relatedArtists: [],
     }
   }
@@ -55,9 +55,9 @@ class SpotifyContainer extends Component {
       localStorage.setItem("token", code);
       this.setState({username},() => router.history.push("/main"));
     })
-    return null
+    return null;
   }
-  return null
+  return null;
 }
 
   handleChange = (event) => {
@@ -90,8 +90,22 @@ class SpotifyContainer extends Component {
       }
     }
 
+  handleArtistId = (event) => {
+    this.setState({ currentArtistId: event.target.id },
+      () => fetch(`https://api.spotify.com/v1/artists/${this.state.currentArtistId}/related-artists`, { headers: headers() })
+        .then(resp => resp.json())
+        .then(data => this.setState({ relatedArtists: data.artists }))
+    )
+  }
+
+  // fetchArtistTopTracks = () => {
+  //   fetch(`https://api.spotify.com/v1/artists/${this.state.currentArtistId}/top-tracks?country=US`, { headers: headers() })
+  //     .then(resp => resp.json())
+  //     .then(data => this.setState({ artistTopTracks: data.tracks }))
+  // }
+
   render() {
-    const { currentUser, songSearchTerm, artistSearchTerm, isSong, songResults, artistResults, relatedArtists } = this.state;
+    const { currentUser, songSearchTerm, artistSearchTerm, isSong, songResults, artistResults, relatedArtists, currentArtistId } = this.state;
 
     return (
       <div>
@@ -101,8 +115,8 @@ class SpotifyContainer extends Component {
 
         <div align="right" className="four wide column">
           <User currentUser={currentUser} />
-        </div>
-
+        </div><br /><br />
+        
         <Grid>
           <Grid.Column align="center" className="ui grid">
             <SearchBar
@@ -115,7 +129,8 @@ class SpotifyContainer extends Component {
           </Grid.Column>
         </Grid>
 
-        <Grid className="ui equal width grid">
+        <Grid columns={3} divided>
+
           <Grid.Column className="eight wide column">
             <Results
               songSearchTerm={songSearchTerm}
@@ -124,8 +139,11 @@ class SpotifyContainer extends Component {
               songResults={songResults}
               artistResults={artistResults}
               relatedArtists={relatedArtists}
+              handleArtistId={this.handleArtistId}
+              currentArtistId={currentArtistId}
             />
           </Grid.Column>
+
 
           <Grid.Column className="eight wide column">
             <RelatedArtists

@@ -3,6 +3,7 @@ import React from 'react';
 const RelatedArtists = (props) => {
   return (
     <div>
+    <h1 align="center">Related Artists</h1>
       <ol>
       {props.relatedArtists.map((relatedArtist) => {
         return (

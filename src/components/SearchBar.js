@@ -7,6 +7,7 @@ const SearchBar = (props) => {
     <div align="center">
       <Button basic color="teal" name="song" onClick={props.handleClick}>Song</Button>
       <Button basic color="red" name="artist" onClick={props.handleClick}>Artist</Button>
+      {/*<Button basic color="green" name="favorites" onClick={props.handleClick}>Favorites</Button>*/}
       <br />
       <br />
       {props.isSong ?
