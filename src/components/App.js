@@ -1,10 +1,11 @@
 import React from 'react';
-import SpotifyContainer from './SpotifyContainer';
+import { Route } from 'react-router-dom'
+import SpotifyContainer from '../containers/SpotifyContainer';
 
 class App extends React.Component {
   render() {
     return (
-      <SpotifyContainer />
+      <Route path="/" component={SpotifyContainer} />
     )
   }
 }
