@@ -3,7 +3,7 @@ import React from 'react';
 const User = (props) => {
   return (
     <div>
-      {props.currentUser}
+      Logged In As: <strong>{props.currentUser}</strong>
     </div>
   )
 }
