@@ -7,15 +7,12 @@ import { Grid } from 'semantic-ui-react'
 import LoginButton from '../components/Login/LoginPage';
 import MainPage from '../components/Main/MainPage';
 
-import Related from '../components/NewReleases';
-import Results from '../components/Results';
-import SearchBar from '../components/SearchBar';
-import User from '../components/User';
-
-// import { fetchProfile } from '../actions/fetchProfile';
-// import { fetchSong } from '../actions/fetchSong';
-
 import { headers } from '../authorization/headers';
+
+import User from '../components/User';
+import SearchBar from '../components/SearchBar';
+import Results from '../components/Results';
+import RelatedArtists from '../components/RelatedArtists';
 
 
 class SpotifyContainer extends Component {
@@ -24,13 +21,12 @@ class SpotifyContainer extends Component {
 
     this.state = {
       currentUser: "",
-      searchTerm: "",
+      songSearchTerm: "",
+      artistSearchTerm: "",
       isSong: true,
-      artist: "",
-      song: {},
-      topTracks: [],
-      newReleases: [],
-      results: [],
+      songResults: [],
+      artistResults: [],
+      relatedArtists: [],
     }
   }
 
@@ -38,9 +34,6 @@ class SpotifyContainer extends Component {
     fetch("https://api.spotify.com/v1/me", { headers: headers() })
       .then(resp => resp.json())
       .then(user => this.setState({ currentUser: user.display_name }))
-    fetch(`https://api.spotify.com/v1/browse/new-releases`, { headers: headers() })
-      .then(resp => resp.json())
-      .then(data => this.setState({ newReleases: data }))
   }
 
   handleCode = router => {
@@ -60,7 +53,7 @@ class SpotifyContainer extends Component {
     .then(data=> {
       const {username,code} = data
       localStorage.setItem("token", code);
-      this.setState({username},() => router.history.push("/main"))
+      this.setState({username},() => router.history.push("/main"));
     })
     return null
   }
@@ -68,7 +61,11 @@ class SpotifyContainer extends Component {
 }
 
   handleChange = (event) => {
-    this.setState({ searchTerm: event.target.value })
+    if (this.state.isSong) {
+      this.setState({ songSearchTerm: event.target.value });
+    } else {
+      this.setState({ artistSearchTerm: event.target.value })
+    }
   }
 
   handleClick = (event) => {
@@ -77,13 +74,24 @@ class SpotifyContainer extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    fetch(`https://api.spotify.com/v1/search?q=${this.state.searchTerm}&type=track`, { headers: headers() })
+    if (this.state.isSong) {
+      fetch(`https://api.spotify.com/v1/search?q=${this.state.songSearchTerm}&type=track`, { headers: headers() })
       .then(resp => resp.json())
-      .then(data => this.setState({ results: data.tracks.items }))
-  }
+      .then(data => this.setState({ songResults: data.tracks.items }))
+    } else {
+      fetch(`https://api.spotify.com/v1/search?q=${this.state.artistSearchTerm}&type=artist`, { headers: headers() })
+        .then(resp => resp.json())
+        .then(data => this.setState({ artistResults: data.artists.items }, () => {
+          fetch(`https://api.spotify.com/v1/artists/${this.state.artistResults[0].id}/related-artists`, { headers: headers() })
+            .then(resp => resp.json())
+            .then(data => this.setState({ relatedArtists: data.artists }))
+          })
+        )
+      }
+    }
 
   render() {
-    const { currentUser, searchTerm, isSong, results, topTracks } = this.state;
+    const { currentUser, songSearchTerm, artistSearchTerm, isSong, songResults, artistResults, relatedArtists } = this.state;
 
     return (
       <div>
@@ -97,16 +105,32 @@ class SpotifyContainer extends Component {
 
         <Grid>
           <Grid.Column align="center" className="ui grid">
-            <SearchBar searchTerm={searchTerm} isSong={isSong} handleClick={this.handleClick} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
+            <SearchBar
+              songSearchTerm={songSearchTerm}
+              isSong={isSong}
+              handleClick={this.handleClick}
+              handleChange={this.handleChange}
+              handleSubmit={this.handleSubmit}
+            />
           </Grid.Column>
         </Grid>
 
-        <Grid>
+        <Grid className="ui equal width grid">
           <Grid.Column className="eight wide column">
-            <Results searchTerm={searchTerm} results={results} />
+            <Results
+              songSearchTerm={songSearchTerm}
+              artistSearchTerm={artistSearchTerm}
+              isSong={isSong}
+              songResults={songResults}
+              artistResults={artistResults}
+              relatedArtists={relatedArtists}
+            />
           </Grid.Column>
+
           <Grid.Column className="eight wide column">
-            <Related topTracks={topTracks} searchTerm={searchTerm} />
+            <RelatedArtists
+              relatedArtists={relatedArtists}
+            />
           </Grid.Column>
         </Grid>
 
