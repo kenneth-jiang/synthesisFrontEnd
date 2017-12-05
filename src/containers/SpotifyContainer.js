@@ -33,7 +33,6 @@ class SpotifyContainer extends Component {
   }
 
   handleCode = router => {
-    debugger
     if (localStorage.getItem("token")) {
       this.props.history.push("/main")
     } else {
@@ -48,7 +47,6 @@ class SpotifyContainer extends Component {
     )
     .then(res => res.json())
     .then(data => {
-      debugger
       const {currentUser, code} = data
       localStorage.setItem("token", code);
       this.setState({ currentUser: currentUser['display_name'] }, () => this.props.history.push("/main"));
