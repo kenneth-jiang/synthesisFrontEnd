@@ -1,6 +1,7 @@
 import React from 'react';
 
 const Url = "https://open.spotify.com/embed?uri="
+
 const SpotifyPlayer = (props) => {
   return (
     <div align="center">
