@@ -4,7 +4,7 @@ const Results = (props) => {
   if (props.isSong) {
     return (
       <div>
-      <h1 align="center">Songs Results</h1>
+      <h1 align="center">Track Results</h1>
         <br />
         <ol>
         {props.songResults.map((songResult) => {
@@ -18,14 +18,15 @@ const Results = (props) => {
                 Artist(s): {songResult.artists.map((artist) => {
                   return (
                     <ul key={artist.id}>
-                      <li key={artist.id} onClick={props.handleArtistId} id={artist.id}>
+                      <li key={artist.id} id={artist.id}>
                         {artist.name}
+                        <div onClick={props.handleArtistId} id={artist.id}>Related Artists</div>
+                        <div onClick={props.handleTopTracks} id={artist.id}>Top Tracks</div>
                       </li>
                     </ul>
                   )
                 })}
 
-                <a href={songResult.href}>Preview</a>
 
               </ul>
               <br />

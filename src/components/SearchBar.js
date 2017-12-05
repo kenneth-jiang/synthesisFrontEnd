@@ -11,21 +11,17 @@ const SearchBar = (props) => {
       <br />
       <br />
       {props.isSong ?
-        (<form name="song" onSubmit={props.handleSubmit}>
-          <div className="ui action input" value={props.songSearchTerm} onChange={props.handleChange}>
-            <input type="text" placeholder="Search for a Song"/>
-            <button className="ui icon button">
-              <i className="search icon"></i>
-            </button>
+        (<form name="song" onSubmit={props.handleSubmit} onChange={props.handleChange} >
+          <div className="ui action input" value={props.songSearchTerm}>
+            <input placeholder="Search for a Song"/>
+            <button className="ui icon button"><i className="search icon" /></button>
           </div>
         </form>)
         :
-        (<form name="artist" onSubmit={props.handleSubmit}>
-          <div className="ui action input" value={props.artistSearchTerm} onChange={props.handleChange}>
-            <input type="text" placeholder="Search for an Artist"/>
-            <button className="ui icon button" value="submit">
-              <i className="search icon"></i>
-            </button>
+        (<form name="artist" onSubmit={props.handleSubmit} onChange={props.handleChange}>
+          <div className="ui action input" value={props.artistSearchTerm}>
+            <input placeholder="Search for an Artist"/>
+            <button className="ui icon button"><i className="search icon" /></button>
           </div>
         </form>)
       }

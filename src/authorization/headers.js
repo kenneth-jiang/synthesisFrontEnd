@@ -1,4 +1,3 @@
-
 export function headers() {
   return {
     'Content-type': 'application/json',
