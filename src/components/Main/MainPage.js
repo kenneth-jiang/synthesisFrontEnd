@@ -17,12 +17,10 @@ class MainPage extends React.Component {
       songSearchTerm: "",
       artistSearchTerm: "",
       isSong: true,
-      isRelated: true,
       songResults: [],
       artistResults: [],
       currentArtistId: "",
       relatedArtists: [],
-      topTracks: [],
     }
   }
 
@@ -41,39 +39,31 @@ class MainPage extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
     if (this.state.isSong) {
-      fetch(`http://localhost:3000/api/v1/songs?q=${this.state.songSearchTerm}`, { headers: headers() })
-        .then(resp => resp.json())
-        .then(data => this.setState({ songResults: data.songs.tracks.items }))
+      fetch(`http://localhost:3000/api/v1/?q=${this.state.songSearchTerm}`, { headers: headers() })
+      .then(resp => resp.json())
+      .then(data => this.setState({ songResults: data.tracks.items }))
     } else {
       fetch(`http://localhost:3000/api/v1/artists?q=${this.state.artistSearchTerm}`, { headers: headers() })
         .then(resp => resp.json())
-        .then(data => this.setState({ artistResults: data.artists.artists.items }, () => {
+        .then(data => this.setState({ artistResults: data.artists.items }, () => {
           fetch(`http://localhost:3000/api/v1/related_artists?q=${this.state.artistResults[0].id}`, { headers: headers() })
             .then(resp => resp.json())
-            .then(data => this.setState({ relatedArtists: data.related_artist.artists }))
+            .then(data => this.setState({ relatedArtists: data.artists }))
           })
         )
       }
     }
 
   handleArtistId = (event) => {
-    this.setState({ isRelated: true, currentArtistId: event.target.id }, () =>
-      fetch(`http://localhost:3000/api/v1/related_artists?q=${this.state.currentArtistId}`, { headers: headers() })
+    this.setState({ currentArtistId: event.target.id },
+      () => fetch(`https://api.spotify.com/v1/artists/${this.state.currentArtistId}/related-artists`, { headers: headers() })
         .then(resp => resp.json())
-        .then(data => this.setState({ relatedArtists: data.related_artist.artists }))
-    )
-  }
-
-  handleTopTracks = (event) => {
-    this.setState({ isRelated: false, currentArtistId: event.target.id }, () =>
-      fetch(`http://localhost:3000/api/v1/top_tracks?q=${this.state.currentArtistId}`, { headers: headers() })
-        .then(resp => resp.json())
-        .then(data => this.setState({ topTracks: data.top_tracks.tracks }, () => console.log(this.state.topTracks)))
+        .then(data => this.setState({ relatedArtists: data.artists }))
     )
   }
 
   render() {
-    const { songSearchTerm, artistSearchTerm, isSong, songResults, artistResults, relatedArtists, currentArtistId, isRelated, topTracks } = this.state;
+    const { songSearchTerm, artistSearchTerm, isSong, songResults, artistResults, relatedArtists, currentArtistId } = this.state;
     return (
 
       <div>
@@ -102,16 +92,13 @@ class MainPage extends React.Component {
             relatedArtists={relatedArtists}
             handleArtistId={this.handleArtistId}
             currentArtistId={currentArtistId}
-            handleTopTracks={this.handleTopTracks}
           />
         </Grid.Column>
 
 
         <Grid.Column className="eight wide column">
           <RelatedArtists
-            isRelated={isRelated}
             relatedArtists={relatedArtists}
-            topTracks={topTracks}
           />
         </Grid.Column>
       </Grid>
