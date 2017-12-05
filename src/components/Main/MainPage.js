@@ -49,6 +49,7 @@ class MainPage extends React.Component {
       fetch(`https://synthesis-k3.herokuapp.com/api/v1/artists?q=${this.state.artistSearchTerm}`, { headers: headers() })
         .then(resp => resp.json())
         .then(data => this.setState({ artistResults: data.artists.artists.items }, () => {
+          console.log(data);
           fetch(`https://synthesis-k3.herokuapp.com/api/v1/related_artists?q=${this.state.artistResults[0].id}`, { headers: headers() })
             .then(resp => resp.json())
             .then(data => this.setState({ relatedArtists: data.related_artist.artists }, () => console.log(this.state.relatedArtists)))
