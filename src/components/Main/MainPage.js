@@ -17,6 +17,7 @@ class MainPage extends React.Component {
       songSearchTerm: "",
       artistSearchTerm: "",
       isSong: true,
+      isRelated: true,
       songResults: [],
       artistResults: [],
       currentArtistId: "",
@@ -41,16 +42,16 @@ class MainPage extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
     if (this.state.isSong) {
-      fetch(`https://synthesis-k3.herokuapp.com/api/v1/?q=${this.state.songSearchTerm}`, { headers: headers() })
+      fetch(`https://synthesis-k3.herokuapp.com/api/v1/songs?q=${this.state.songSearchTerm}`, { headers: headers() })
       .then(resp => resp.json())
-      .then(data => this.setState({ songResults: data.tracks.items }))
+      .then(data => this.setState({ songResults: data.songs.tracks.items }))
     } else {
       fetch(`https://synthesis-k3.herokuapp.com/api/v1/artists?q=${this.state.artistSearchTerm}`, { headers: headers() })
         .then(resp => resp.json())
-        .then(data => this.setState({ artistResults: data.artists.items }, () => {
+        .then(data => this.setState({ artistResults: data.artists.artists.items }, () => {
           fetch(`https://synthesis-k3.herokuapp.com/api/v1/related_artists?q=${this.state.artistResults[0].id}`, { headers: headers() })
             .then(resp => resp.json())
-            .then(data => this.setState({ relatedArtists: data.artists }))
+            .then(data => this.setState({ relatedArtists: data.related_artist.artists }, () => console.log(this.state.relatedArtists)))
           })
         )
       }
@@ -60,7 +61,7 @@ class MainPage extends React.Component {
     this.setState({ currentArtistId: event.target.id },
       () => fetch(`https://api.spotify.com/v1/artists/${this.state.currentArtistId}/related-artists`, { headers: headers() })
         .then(resp => resp.json())
-        .then(data => this.setState({ topTracks: data.top_tracks.tracks }))
+        .then(data => this.setState({ topTracks: data.top_tracks.top_tracks.tracks }))
     )
   }
 
@@ -107,6 +108,7 @@ class MainPage extends React.Component {
         <Grid.Column className="eight wide column">
           <RelatedArtists
             relatedArtists={relatedArtists}
+            isRelated={isRelated}
             topTracks={topTracks}
             handleUri={this.handleUri}
             spotifyUri={spotifyUri}
