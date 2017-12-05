@@ -22,7 +22,7 @@ class MainPage extends React.Component {
       currentArtistId: "",
       relatedArtists: [],
       topTracks: [],
-      spotifyUri: "",
+      spotifyUri: "spotify:track:3vv9phIu6Y1vX3jcqaGz5Z",
     }
   }
 
