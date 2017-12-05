@@ -7,7 +7,7 @@ import { headers } from '../../authorization/headers';
 import SearchBar from '../SearchBar';
 import Results from '../Results';
 import RelatedArtists from '../RelatedArtists';
-
+import SpotifyPlayer from '../SpotifyPlayer';
 
 class MainPage extends React.Component {
   constructor() {
@@ -21,6 +21,8 @@ class MainPage extends React.Component {
       artistResults: [],
       currentArtistId: "",
       relatedArtists: [],
+      topTracks: [],
+      spotifyUri: "",
     }
   }
 
@@ -58,16 +60,22 @@ class MainPage extends React.Component {
     this.setState({ currentArtistId: event.target.id },
       () => fetch(`https://api.spotify.com/v1/artists/${this.state.currentArtistId}/related-artists`, { headers: headers() })
         .then(resp => resp.json())
-        .then(data => this.setState({ relatedArtists: data.artists }))
+        .then(data => this.setState({ topTracks: data.top_tracks.tracks }))
     )
   }
 
-  render() {
-    const { songSearchTerm, artistSearchTerm, isSong, songResults, artistResults, relatedArtists, currentArtistId } = this.state;
-    return (
+  handleUri = (event) => {
+    console.log(event.target.value)
+    this.setState({ spotifyUri: event.target.value }, () => console.log(this.state.spotifyUri))
+  }
 
+  render() {
+    const { songSearchTerm, artistSearchTerm, isSong, songResults, artistResults, relatedArtists, currentArtistId, isRelated, topTracks, spotifyUri } = this.state;
+    return (
       <div>
 
+      <SpotifyPlayer spotifyUri={spotifyUri} />
+      <br />
       <Grid>
         <Grid.Column align="center" className="ui grid">
           <SearchBar
@@ -99,6 +107,9 @@ class MainPage extends React.Component {
         <Grid.Column className="eight wide column">
           <RelatedArtists
             relatedArtists={relatedArtists}
+            topTracks={topTracks}
+            handleUri={this.handleUri}
+            spotifyUri={spotifyUri}
           />
         </Grid.Column>
       </Grid>

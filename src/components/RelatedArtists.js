@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from 'semantic-ui-react'
 
 const RelatedArtists = (props) => {
   if (props.isRelated) {
@@ -41,6 +42,7 @@ const RelatedArtists = (props) => {
               Album: {topTrack.album.name}
               <br />
               <a href={topTrack.preview_url}>Preview</a>
+              <Button onClick={props.handleUri} value={topTrack.uri}>Click Me</Button>
               <br /><br />
             </li>
           )

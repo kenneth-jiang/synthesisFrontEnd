@@ -65,6 +65,7 @@ class SpotifyContainer extends Component {
   render() {
     return (
       <div>
+      
         <div align="right" className="four wide column">
           <User currentUser={this.state.currentUser} />
         </div><br /><br />
