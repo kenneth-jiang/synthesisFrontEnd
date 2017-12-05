@@ -6,7 +6,7 @@ import { Button } from 'semantic-ui-react'
 const LoginButton = () => {
   return (
     <div>
-      <Button basic color="teal" href='http://localhost:3000/api/v1/login'>Log In</Button>
+      <Button basic color="teal" href='https://synthesis-k3.herokuapp.com/api/v1/login'>Log In</Button>
     </div>
   )
 }

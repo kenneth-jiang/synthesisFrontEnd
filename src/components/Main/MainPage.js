@@ -41,14 +41,14 @@ class MainPage extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
     if (this.state.isSong) {
-      fetch(`http://localhost:3000/api/v1/?q=${this.state.songSearchTerm}`, { headers: headers() })
+      fetch(`https://synthesis-k3.herokuapp.com/api/v1/?q=${this.state.songSearchTerm}`, { headers: headers() })
       .then(resp => resp.json())
       .then(data => this.setState({ songResults: data.tracks.items }))
     } else {
-      fetch(`http://localhost:3000/api/v1/artists?q=${this.state.artistSearchTerm}`, { headers: headers() })
+      fetch(`https://synthesis-k3.herokuapp.com/api/v1/artists?q=${this.state.artistSearchTerm}`, { headers: headers() })
         .then(resp => resp.json())
         .then(data => this.setState({ artistResults: data.artists.items }, () => {
-          fetch(`http://localhost:3000/api/v1/related_artists?q=${this.state.artistResults[0].id}`, { headers: headers() })
+          fetch(`https://synthesis-k3.herokuapp.com/api/v1/related_artists?q=${this.state.artistResults[0].id}`, { headers: headers() })
             .then(resp => resp.json())
             .then(data => this.setState({ relatedArtists: data.artists }))
           })
