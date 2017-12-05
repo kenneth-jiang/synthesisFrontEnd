@@ -5,15 +5,15 @@ import { Button } from 'semantic-ui-react'
 const SearchBar = (props) => {
   return (
     <div align="center">
-      <Button basic color="teal" name="song" onClick={props.handleClick}>Song</Button>
-      <Button basic color="red" name="artist" onClick={props.handleClick}>Artist</Button>
-      {/*<Button basic color="green" name="favorites" onClick={props.handleClick}>Favorites</Button>*/}
+      <Button basic color="teal" name="song" onClick={props.handleClick}>Search Tracks</Button>
+      <Button basic color="red" name="artist" onClick={props.handleClick}>Search Artists</Button>
+
       <br />
       <br />
       {props.isSong ?
         (<form name="song" onSubmit={props.handleSubmit} onChange={props.handleChange} >
           <div className="ui action input" value={props.songSearchTerm}>
-            <input placeholder="Search for a Song"/>
+            <input placeholder="Search for a Track"/>
             <button className="ui icon button"><i className="search icon" /></button>
           </div>
         </form>)
