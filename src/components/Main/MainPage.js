@@ -16,16 +16,25 @@ class MainPage extends React.Component {
     this.state = {
       songSearchTerm: "",
       artistSearchTerm: "",
+
       isSong: true,
       isRelated: true,
+
       songResults: [],
       artistResults: [],
-      currentArtistId: "",
+
+      currentArtistId: "", //used for to search related artists and top tracks
       relatedArtists: [],
       topTracks: [],
+
       spotifyUri: "spotify:track:3vv9phIu6Y1vX3jcqaGz5Z",
     }
   }
+
+  handleClick = (event) => {
+    return event.target.name === "song" ? this.setState({ isSong: true }) : this.setState({ isSong: false });
+  }
+  // display either song or artist results
 
   handleChange = (event) => {
     if (this.state.isSong) {
@@ -34,10 +43,8 @@ class MainPage extends React.Component {
       this.setState({ artistSearchTerm: event.target.value })
     }
   }
+  // set state for whether to display song or artist input
 
-  handleClick = (event) => {
-    return event.target.name === "song" ? this.setState({ isSong: true }) : this.setState({ isSong: false });
-  }
 
   handleSubmit = (event) => {
     event.preventDefault();
@@ -49,27 +56,43 @@ class MainPage extends React.Component {
       fetch(`https://synthesis-k3.herokuapp.com/api/v1/artists?q=${this.state.artistSearchTerm}`, { headers: headers() })
         .then(resp => resp.json())
         .then(data => this.setState({ artistResults: data.artists.artists.items }, () => {
-          console.log(data);
           fetch(`https://synthesis-k3.herokuapp.com/api/v1/related_artists?q=${this.state.artistResults[0].id}`, { headers: headers() })
             .then(resp => resp.json())
-            .then(data => this.setState({ relatedArtists: data.related_artist.artists }, () => console.log(this.state.relatedArtists)))
+            .then(data => this.setState({ relatedArtists: data.related_artist.artists }))
           })
         )
       }
     }
+  // submit either song or artist form and sets state for song or artist results
 
   handleArtistId = (event) => {
-    this.setState({ currentArtistId: event.target.id },
-      () => fetch(`https://api.spotify.com/v1/artists/${this.state.currentArtistId}/related-artists`, { headers: headers() })
+    this.setState({ isRelated: true, currentArtistId: event.target.id },
+    () => fetch(`https://synthesis-k3.herokuapp.com/api/v1/related_artists?q=${this.state.currentArtistId}`, { headers: headers() })
         .then(resp => resp.json())
-        .then(data => this.setState({ topTracks: data.top_tracks.top_tracks.tracks }))
+        .then(data => this.setState({ relatedArtists: data.related_artist.artists }))
     )
   }
+  // sets related artist for user input of artist search
+
+  handleTopTracks = (event) => {
+   this.setState({ isRelated: false, currentArtistId: event.target.id }, () =>
+     fetch(`https://synthesis-k3.herokuapp.com/api/v1/top_tracks?q=${this.state.currentArtistId}`, { headers: headers() })
+       .then(resp => resp.json())
+       .then(data => this.setState({ topTracks: data.top_tracks.tracks }, () => console.log(this.state.topTracks)))
+     )
+   }
 
   handleUri = (event) => {
-    console.log(event.target.value)
-    this.setState({ spotifyUri: event.target.value }, () => console.log(this.state.spotifyUri))
+    this.setState({ spotifyUri: event.target.value })
   }
+  // sets state for song changes for demo player
+
+  playSongSnippet = songUri => {
+    this.setState({
+      spotifyUri: songUri
+    })
+  }
+  // sets state for song changes for demo player
 
   render() {
     const { songSearchTerm, artistSearchTerm, isSong, songResults, artistResults, relatedArtists, currentArtistId, isRelated, topTracks, spotifyUri } = this.state;
@@ -102,6 +125,8 @@ class MainPage extends React.Component {
             relatedArtists={relatedArtists}
             handleArtistId={this.handleArtistId}
             currentArtistId={currentArtistId}
+            handleTopTracks={this.handleTopTracks}
+            playSongSnippet={this.playSongSnippet}
           />
         </Grid.Column>
 

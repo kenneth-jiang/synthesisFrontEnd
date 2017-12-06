@@ -1,4 +1,5 @@
 import React from 'react';
+import ArtistsList from './Artists/ArtistsList';
 
 const Results = (props) => {
   if (props.isSong) {
@@ -26,8 +27,6 @@ const Results = (props) => {
                     </ul>
                   )
                 })}
-
-
               </ul>
               <br />
             </li>
@@ -39,31 +38,7 @@ const Results = (props) => {
   } else {
     return (
       <div>
-      <h1 align="center">Artist Results</h1>
-      <br />
-        <ol>
-          {props.artistResults.map((artistResult) => {
-            return (
-              <li key={artistResult.id}>
-                <ul>
-                  {artistResult.name}
-                  <br />
-                  Genres:
-                    <ol>
-                      {artistResult.genres.map((genre) => {
-                        return (
-                          <li key={genre}>
-                            {genre}
-                          </li>
-                        )
-                      })}
-                    </ol>
-                    <br />
-                </ul>
-              </li>
-            )
-          })}
-        </ol>
+        <ArtistsList artistResults={props.artistResults} playSongSnippet={props.playSongSnippet}/>
       </div>
     )
   }
