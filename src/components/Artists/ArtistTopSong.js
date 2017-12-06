@@ -10,7 +10,7 @@ class ArtistTopSong extends Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     // console.log(this.props);
     fetch(`https://synthesis-k3.herokuapp.com/api/v1/top_tracks?q=${this.props.artistId}`, { headers: headers() })
       .then(resp => resp.json())
