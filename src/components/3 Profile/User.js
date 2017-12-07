@@ -10,8 +10,12 @@ const User = (props) => {
   }
   return (
     <div>
-      Logged In As: <Button basic color="yellow" onClick={() => alert("Should link to a profile page!")}>{props.currentUser}</Button>
-      <Button basic color="teal" onClick={logOut}>Log Out</Button>
+      {localStorage.length !== 0 ?
+        <div>
+          Logged In As: <Button basic color="yellow" onClick={() => alert(`${props.currentUser} is currently logged in`)}>{props.currentUser}</Button>
+          <Button basic color="teal" onClick={logOut}>Log Out</Button>
+        </div>
+        : null}
     </div>
   )
 }
