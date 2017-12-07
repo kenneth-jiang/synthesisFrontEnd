@@ -4,7 +4,7 @@ import ArtistDetail from './ArtistDetail';
 const RelatedArtistsList = props => {
   return (
     <div>
-      <h1 align="center">Related Artists</h1>
+      <h1 align="center"><u>Related Artists</u></h1>
       <ol>
         {props.relatedArtists.map((artistResult) => {
           return (
