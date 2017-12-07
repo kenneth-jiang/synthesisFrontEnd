@@ -284,7 +284,7 @@ In the WebStorm menu `Run` select `Edit Configurations...`. Then click `+` and s
 
 Start your app by running `npm start`, then press `^D` on macOS or `F9` on Windows and Linux or click the green debug icon to start debugging in WebStorm.
 
-The same way you can debug your application in IntelliJ IDEA Ultimate, PhpStorm, PyCharm Pro, and RubyMine. 
+The same way you can debug your application in IntelliJ IDEA Ultimate, PhpStorm, PyCharm Pro, and RubyMine.
 
 ## Formatting Code Automatically
 
@@ -1822,7 +1822,7 @@ If you’re using [Apache HTTP Server](https://httpd.apache.org/), you need to c
     RewriteRule ^ index.html [QSA,L]
 ```
 
-It will get copied to the `build` folder when you run `npm run build`. 
+It will get copied to the `build` folder when you run `npm run build`.
 
 If you’re using [Apache Tomcat](http://tomcat.apache.org/), you need to follow [this Stack Overflow answer](https://stackoverflow.com/a/41249464/4878474).
 
@@ -2218,7 +2218,7 @@ To resolve this:
 1. Open an issue on the dependency's issue tracker and ask that the package be published pre-compiled.
   * Note: Create React App can consume both CommonJS and ES modules. For Node.js compatibility, it is recommended that the main entry point is CommonJS. However, they can optionally provide an ES module entry point with the `module` field in `package.json`. Note that **even if a library provides an ES Modules version, it should still precompile other ES6 features to ES5 if it intends to support older browsers**.
 
-2. Fork the package and publish a corrected version yourself. 
+2. Fork the package and publish a corrected version yourself.
 
 3. If the dependency is small enough, copy it to your `src/` folder and treat it as application code.
 
@@ -2227,3 +2227,43 @@ In the future, we might start automatically compiling incompatible third-party m
 ## Something Missing?
 
 If you have ideas for more “How To” recipes that should be on this page, [let us know](https://github.com/facebookincubator/create-react-app/issues) or [contribute some!](https://github.com/facebookincubator/create-react-app/edit/master/packages/react-scripts/template/README.md)
+
+
+Synthesis:
+
+Overview
+
+Synthesis provides users the opportunity to find new music. This can be accessed using a desired song or artist as a starting point, then making suggestions based on the users input.
+
+
+
+Routes
+
+<Route path="/" component={SpotifyContainer} />
+
+Renders user information
+Ensures that user is logged in and directs users to permitted page
+<Route exact path="/login" component={LoginButton} />
+
+ Renders a 'Log In’ button that directs user to sign in to their Spotify Account
+
+<Route exact path="/main" component={MainPage} />
+
+Renders the <Main Page/> component, which is responsible for providing the actions/prop to and rendering most other Synthesis components
+
+Functionality
+
+Artist:
+
+-Allows User to locate artists similar to user input
+-Allows user access to song snippets for Artist related to user input
+-[projected] Allows users to favorite new selected Artists
+
+Song:
+-Allows User to locate a song based on user input
+-Once song is located, the Artist for that song AND related Artists are available to the user for discovery!
+-[projected] Allows users to favorite selected Songs
+
+Embedded music player provides user access to listen to tracks directly on the main page
+
+//---------
