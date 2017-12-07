@@ -18,7 +18,7 @@ class AuthorizationPage extends Component {
   componentDidMount() {
     if (!this.state.loggedIn && localStorage.getItem("token")) {
       this.fetchUser()
-      .then(data => {this.setState({ currentUser: data.data.attributes[`display-name`], loggedIn: true })})
+      .then(data => {this.setState({ currentUser: data.data.attributes["display-name"], loggedIn: true })})
     }
   }
 
@@ -43,7 +43,7 @@ class AuthorizationPage extends Component {
         .then(data => {
           const {currentUser, code} = data
           localStorage.setItem("token", code);
-          this.setState({ currentUser: currentUser['display_name'] }, () => this.props.history.push("/main"))
+          this.setState({ currentUser: currentUser["display_name"] }, () => this.props.history.push("/main"))
         }
       )
       return null;

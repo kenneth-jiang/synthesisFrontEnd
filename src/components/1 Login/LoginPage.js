@@ -8,7 +8,7 @@ const LoginPage = () => {
           <Header size='huge'>Synthesis</Header>
           <Image src='https://media.giphy.com/media/wR3yklvpBIgzS/giphy.gif' fluid />
           <div id="login-button">
-            <Button animated inverted color="grey" size="big" href='https://synthesis-k3.herokuapp.com/api/v1/login'>
+            <Button animated basic inverted color="green" size="big" href='https://synthesis-k3.herokuapp.com/api/v1/login'>
               <Button.Content visible>Log In to Spotify</Button.Content>
               <Button.Content hidden>
                 <Icon name='right arrow' />
