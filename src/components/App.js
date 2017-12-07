@@ -6,7 +6,7 @@ import '../app.css'
 class App extends React.Component {
   render() {
     return (
-      <Route path="/" component={AuthorizationPage} />
+      <Route path="/login" component={AuthorizationPage} />
     )
   }
 }
