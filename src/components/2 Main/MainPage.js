@@ -32,7 +32,7 @@ class MainPage extends React.Component {
   componentDidMount() {
     if (!this.state.loggedIn && localStorage.getItem("token")) {
       this.fetchUser()
-      .then(data => {this.setState({ currentUser: data.data.attributes["display-name"], loggedIn: true })})
+      .then(data => {this.setState({ currentUser: data.data.attributes["display-name"] || data.data.attributes['username'], loggedIn: true })})
     }
   }
 
