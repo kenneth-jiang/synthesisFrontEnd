@@ -23,7 +23,7 @@ class MainPage extends React.Component {
       currentArtistId: "", //used for to search related artists and top tracks
       topTracks: [],
       relatedArtists: [],
-      spotifyUri: "spotify:track:3vv9phIu6Y1vX3jcqaGz5Z",
+      spotifyUri: "spotify:track:0bYg9bo50gSsH3LtXe2SQn",
     }
   }
 
