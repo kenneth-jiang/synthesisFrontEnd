@@ -24,7 +24,21 @@ class MainPage extends React.Component {
       topTracks: [],
       relatedArtists: [],
       spotifyUri: "spotify:track:0bYg9bo50gSsH3LtXe2SQn",
+      currentUser: "",
+      loggedIn: false,
     }
+  }
+
+  componentDidMount() {
+    if (!this.state.loggedIn && localStorage.getItem("token")) {
+      this.fetchUser()
+      .then(data => {this.setState({ currentUser: data.data.attributes["display-name"], loggedIn: true })})
+    }
+  }
+
+  fetchUser = () => {
+    return fetch(`https://synthesis-k3.herokuapp.com/api/v1/current_user`, { headers: headers() })
+      .then(resp => resp.json())
   }
 
   handleClick = (event) => {

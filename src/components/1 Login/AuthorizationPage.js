@@ -10,21 +10,8 @@ class AuthorizationPage extends Component {
   constructor() {
     super();
     this.state = {
-      loggedIn: false,
-      currentUser: "",
-    }
-  }
 
-  componentDidMount() {
-    if (!this.state.loggedIn && localStorage.getItem("token")) {
-      this.fetchUser()
-      .then(data => {this.setState({ currentUser: data.data.attributes["display-name"], loggedIn: true })})
     }
-  }
-
-  fetchUser = () => {
-    return fetch(`https://synthesis-k3.herokuapp.com/api/v1/current_user`, { headers: headers() })
-      .then(resp => resp.json())
   }
 
   handleCode = router => {
