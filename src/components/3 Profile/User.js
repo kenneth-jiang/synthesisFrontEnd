@@ -12,8 +12,13 @@ const User = (props) => {
     <div>
       {localStorage.length !== 0 ?
         <div>
-          Logged In As: <Button basic color="yellow" onClick={() => alert(`${props.currentUser} is currently logged in`)}>{props.currentUser}</Button>
-          <Button basic color="teal" onClick={logOut}>Log Out</Button>
+          <Button.Group>
+            <Button>{props.currentUser}</Button>
+            <Button.Or />
+            <Button negative onClick={logOut}>Log Out</Button>
+          </Button.Group>
+          {/* Logged In As: <Button basic color="yellow" onClick={() => alert(`${props.currentUser} is currently logged in`)}>{props.currentUser}</Button>
+          <Button basic color="teal" onClick={logOut}>Log Out</Button> */}
         </div>
         : null}
     </div>
