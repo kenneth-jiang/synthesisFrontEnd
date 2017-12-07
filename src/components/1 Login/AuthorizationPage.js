@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 
 import { headers } from '../../authorization/headers';
-import LoginButton from './LoginPage';
+import LoginPage from './LoginPage';
 import MainPage from '../2 Main/MainPage';
 
 
@@ -54,7 +54,7 @@ class AuthorizationPage extends Component {
   render() {
     return (
       <div>
-        <Route exact path="/login" component={LoginButton} />
+        <Route exact path="/login" component={LoginPage} />
         <Route exact path="/home" component={this.handleCode} />
         <Route exact path="/main" component={MainPage} />
       </div>

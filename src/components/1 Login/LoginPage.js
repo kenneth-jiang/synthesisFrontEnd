@@ -1,11 +1,23 @@
 import React from 'react';
-import { Button } from 'semantic-ui-react'
+import { Image, Button, Container, Header, Icon } from 'semantic-ui-react';
 
-
-const LoginButton = () => {
+const LoginPage = () => {
   return (
-    <Button basic color="teal" href='https://synthesis-k3.herokuapp.com/api/v1/login'>Log In</Button>
+    <div>
+      <Container textAlign='center'>
+          <Header size='huge'>Synthesis</Header>
+          <Image src='https://media.giphy.com/media/wR3yklvpBIgzS/giphy.gif' fluid />
+          <div id="login-button">
+            <Button animated inverted color="grey" size="big" href='https://synthesis-k3.herokuapp.com/api/v1/login'>
+              <Button.Content visible>Log In to Spotify</Button.Content>
+              <Button.Content hidden>
+                <Icon name='right arrow' />
+              </Button.Content>
+            </Button>
+          </div>
+      </Container>
+    </div>
   )
 }
 
-export default LoginButton;
+export default LoginPage;
