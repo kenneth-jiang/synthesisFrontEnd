@@ -7,11 +7,8 @@ import MainPage from '../2 Main/MainPage';
 
 
 class AuthorizationPage extends Component {
-  constructor() {
-    super();
-    this.state = {
-
-    }
+  constructor(props) {
+    super(props);
   }
 
   handleCode = router => {
